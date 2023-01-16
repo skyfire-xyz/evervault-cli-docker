@@ -3,6 +3,8 @@ FROM amd64/buildpack-deps:curl
 
 WORKDIR /app
 
+ARG PORT=9999
+
 RUN apt-get update && apt-get install -y \
   socat \
   && rm -rf /var/lib/apt/lists/*
@@ -15,12 +17,13 @@ ENV PATH=$PATH:/app/bin
 # ev-cage dev binds to 127.0.0.1, but Docker needs it to bind to 0.0.0.0.
 # We use socat to forward TCP traffic from 0.0.0.:9992 -> 127.0.0.1:9999
 RUN <<EOF cat >> bin/start.sh
-socat TCP-LISTEN:9992,fork,bind=0.0.0.0 TCP:localhost:9999 &
-ev-cage dev -p 9999
+socat TCP-LISTEN:${PORT},fork,bind=0.0.0.0 TCP:localhost:9991 &
+echo Listening on external port ${PORT}
+ev-cage dev -p 9991
 EOF
 
 RUN chmod +x bin/start.sh
 
 CMD ["bash", "-c", "start.sh"]
 
-EXPOSE 9992
+EXPOSE ${PORT}

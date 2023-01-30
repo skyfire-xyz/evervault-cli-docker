@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
   socat \
   && rm -rf /var/lib/apt/lists/*
 
-ENV DOWNLOAD_URL https://cage-build-assets.evervault.com/cli/0.1.10/x86_64-unknown-linux-musl/ev-cage.tar.gz
+ENV DOWNLOAD_URL https://cage-build-assets.evervault.com/cli/0.1.11/x86_64-unknown-linux-musl/ev-cage.tar.gz
 
 RUN wget -q "$DOWNLOAD_URL" -O - | tar -xz && chmod 0755 ./bin/ev-cage
 ENV PATH=$PATH:/app/bin

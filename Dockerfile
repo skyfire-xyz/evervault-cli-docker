@@ -15,7 +15,7 @@ RUN wget -q "$DOWNLOAD_URL" -O - | tar -xz && chmod 0755 ./bin/ev-cage
 ENV PATH=$PATH:/app/bin
 
 # ev-cage dev binds to 127.0.0.1, but Docker needs it to bind to 0.0.0.0.
-# We use socat to forward TCP traffic from 0.0.0.:9992 -> 127.0.0.1:9999
+# We use socat to forward TCP traffic from 0.0.0.0:9999 -> 127.0.0.1:9991
 RUN <<EOF cat >> bin/start.sh
 socat TCP-LISTEN:${PORT},fork,bind=0.0.0.0 TCP:localhost:9991 &
 echo Listening on external port ${PORT}

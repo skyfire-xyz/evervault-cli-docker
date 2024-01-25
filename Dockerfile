@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
   && rm -rf /var/lib/apt/lists/*
 
 ENV DOWNLOAD_URL https://enclave-build-assets.evervault.com/cli/1/1.0.0/x86_64-unknown-linux-musl/ev-enclave.tar.gz
-RUN wget -q "$DOWNLOAD_URL" -O - | tar -xz && chmod 0755 ./bin/ev-cage
+RUN wget -q "$DOWNLOAD_URL" -O - | tar -xz && chmod 0755 ./bin/ev-enclave
 ENV PATH=$PATH:/app/bin
 
 # ev-cage dev binds to 127.0.0.1, but Docker needs it to bind to 0.0.0.0.
